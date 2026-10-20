@@ -1,0 +1,48 @@
+---
+import { withBase } from '../../lib/paths';
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+import { render } from 'astro:content';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { formatDate, getPostTags, getPosts, isoDate, readingTime, tagUrl } from '../../lib/posts';
+
+export const getStaticPaths = (async () => {
+  return (await getPosts()).map(post => ({ params: { slug: post.id }, props: { post } }));
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const { post } = Astro.props;
+const { Content } = await render(post);
+const tags = getPostTags(post);
+---
+
+<SiteLayout title={post.data.title} description={post.data.description} section="blog" articleDate={post.data.date} noindex={post.data.draft}>
+  <article class="article">
+    <header class="article-header">
+      <a class="back" href={withBase('/blog/')}>← All posts</a>
+      {post.data.draft && <p class="draft-label">Draft · local preview only</p>}
+      <h1>{post.data.title}</h1>
+      <p class="meta">
+        <time datetime={isoDate(post.data.date)}>{formatDate(post.data.date)}</time>
+        <span aria-hidden="true">·</span>
+        <span>{readingTime(post)} min read</span>
+      </p>
+      {tags.length > 0 && (
+        <ul class="tags" aria-label="Tags">
+          {tags.map(tag => <li><a href={tagUrl(tag)}>{tag.label}</a></li>)}
+        </ul>
+      )}
+    </header>
+    {post.data.cover && (
+      <figure class="article-cover">
+        <img src={withBase(post.data.cover)} alt={post.data.coverAlt} loading="eager" decoding="async" />
+        {post.data.coverAlt && <figcaption>{post.data.coverAlt}</figcaption>}
+      </figure>
+    )}
+    <div class="prose">
+      <Content />
+    </div>
+    <footer class="article-end">
+      <a href={withBase('/blog/')}>← Back to all posts</a>
+    </footer>
+  </article>
+</SiteLayout>

@@ -1,0 +1,27 @@
+---
+import { withBase } from '../../lib/paths';
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+import Heading from '../../components/Heading.astro';
+import PostItem from '../../components/PostItem.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { getPosts, getTags, postsWithTag, type Tag } from '../../lib/posts';
+
+export const getStaticPaths = (async () => {
+  const posts = await getPosts();
+  return getTags(posts).map(tag => ({
+    params: { tag: tag.slug },
+    props: { posts: postsWithTag(posts, tag.slug), tag },
+  }));
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const { posts, tag } = Astro.props as Props & { tag: Tag };
+---
+
+<SiteLayout title={`Tagged “${tag.label}”`} section="blog">
+  <a class="back" href={withBase('/blog/')}>← All posts</a>
+  <Heading>Tagged “{tag.label}”</Heading>
+  <div class="post-list">
+    {posts.map(post => <PostItem post={post} />)}
+  </div>
+</SiteLayout>

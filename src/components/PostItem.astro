@@ -1,0 +1,30 @@
+---
+import { withBase } from '../lib/paths';
+import { formatDate, getPostTags, isoDate, postUrl, readingTime, tagUrl, type Post } from '../lib/posts';
+interface Props { post: Post; heading?: 'h2' | 'h3' }
+const { post, heading: Heading = 'h2' } = Astro.props;
+const tags = getPostTags(post);
+---
+
+<article class:list={['post-item', { 'has-cover': post.data.cover }]}>
+  {post.data.cover && (
+    <a class="post-cover" href={postUrl(post)} tabindex="-1" aria-hidden="true">
+      <img src={withBase(post.data.cover)} alt="" width="120" height="120" loading="lazy" decoding="async" />
+    </a>
+  )}
+  <div class="post-text">
+    <p class="meta">
+      <time datetime={isoDate(post.data.date)}>{formatDate(post.data.date)}</time>
+      <span aria-hidden="true">·</span>
+      <span>{readingTime(post)} min read</span>
+      {post.data.draft && <span class="draft-label">Draft</span>}
+    </p>
+    <Heading class="post-title"><a href={postUrl(post)}>{post.data.title}</a></Heading>
+    <p class="post-description">{post.data.description}</p>
+    {tags.length > 0 && (
+      <ul class="tags" aria-label="Tags">
+        {tags.map(tag => <li><a href={tagUrl(tag)}>{tag.label}</a></li>)}
+      </ul>
+    )}
+  </div>
+</article>

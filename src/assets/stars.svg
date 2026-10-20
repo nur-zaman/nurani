@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 240 240" width="240" height="240">
+  <defs>
+    <path id="s" d="M0-10 2.9-4 9.5-3.1 4.7 1.5 5.9 8.1 0 5-5.9 8.1-4.7 1.5-9.5-3.1-2.9-4Z" fill="#f4c443" stroke="#e3a92c" stroke-width="1.2" stroke-linejoin="round"/>
+  </defs>
+  <use xlink:href="#s" transform="translate(34 30) rotate(-12) scale(1.1)"/>
+  <use xlink:href="#s" transform="translate(150 58) rotate(18) scale(.95)"/>
+  <use xlink:href="#s" transform="translate(92 128) rotate(-24) scale(1.2)"/>
+  <use xlink:href="#s" transform="translate(206 160) rotate(8) scale(1)"/>
+  <use xlink:href="#s" transform="translate(40 206) rotate(22) scale(.9)"/>
+  <use xlink:href="#s" transform="translate(170 222) rotate(-6) scale(.75)"/>
+  <g fill="#f2c95c">
+    <circle cx="96" cy="22" r="2"/><circle cx="214" cy="90" r="1.6"/><circle cx="18" cy="118" r="1.8"/>
+    <circle cx="140" cy="176" r="1.6"/><circle cx="110" cy="236" r="1.4"/><circle cx="196" cy="16" r="1.4"/>
+  </g>
+</svg>

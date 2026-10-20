@@ -1,0 +1,11 @@
+---
+import { withBase } from '../lib/paths';
+// A page heading with the little sitting cat beside it, as in the mockup.
+interface Props { id?: string; level?: 'h1' | 'h2' }
+const { id, level: Tag = 'h1' } = Astro.props;
+---
+
+<Tag class="cat-heading" id={id}>
+  <img src={withBase('/art/cat-sit.png')} alt="" width="64" height="64" decoding="async" />
+  <span><slot /></span>
+</Tag>

@@ -1,0 +1,18 @@
+---
+import { getEntry, render } from 'astro:content';
+import Heading from '../components/Heading.astro';
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+const about = await getEntry('pages', 'about');
+const Content = about ? (await render(about)).Content : undefined;
+const title = about?.data.title || 'About';
+---
+
+<SiteLayout title={title} section="about">
+  <Heading>{title}</Heading>
+  {Content && (
+    <div class="prose">
+      <Content />
+    </div>
+  )}
+</SiteLayout>

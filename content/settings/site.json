@@ -1,0 +1,11 @@
+{
+  "name": "Nurani Zaman",
+  "title": "Nurani Zaman",
+  "description": "Nurani Zaman's little corner of the internet: notes, thoughts, and things I made.",
+  "taglines": ["Writer", "Daydreamer", "Cat person"],
+  "avatar": "",
+  "avatarAlt": "",
+  "links": [
+    { "label": "Email", "url": "mailto:hello@nurani.work" }
+  ]
+}

@@ -1,0 +1,42 @@
+---
+import { withBase } from '../../lib/paths';
+import Heading from '../../components/Heading.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { getThings } from '../../lib/posts';
+
+const things = await getThings();
+const isExternal = (url?: string) => Boolean(url && /^https?:/.test(url));
+---
+
+<SiteLayout title="Things I made" section="things">
+  <Heading>Things I made</Heading>
+  {things.length > 0 ? (
+    <ul class="things">
+      {things.map(thing => (
+        <li class:list={['thing', { 'has-image': thing.data.image }]}>
+          {thing.data.image && (
+            <div class="thing-photo"><img src={withBase(thing.data.image)} alt={thing.data.imageAlt} loading="lazy" decoding="async" /></div>
+          )}
+          <div class="thing-text">
+            <h2>
+              {thing.data.url ? (
+                <a
+                  href={withBase(thing.data.url)}
+                  target={isExternal(thing.data.url) ? '_blank' : undefined}
+                  rel={isExternal(thing.data.url) ? 'noopener noreferrer' : undefined}
+                >{thing.data.title}{isExternal(thing.data.url) && <span aria-hidden="true"> ↗</span>}</a>
+              ) : thing.data.title}
+              {thing.data.draft && <span class="draft-label">Draft</span>}
+            </h2>
+            <p>{thing.data.description}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <div class="empty">
+      <img src={withBase('/art/cat-sleep.png')} alt="" width="140" height="140" loading="lazy" />
+      <p>Nothing here yet. Things are being made.</p>
+    </div>
+  )}
+</SiteLayout>

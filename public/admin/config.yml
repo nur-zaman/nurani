@@ -1,0 +1,104 @@
+# Sveltia CMS — the editor at https://nur-zaman.github.io/nurani/admin/ (later https://nurani.work/admin/)
+# Docs: https://github.com/sveltia/sveltia-cms
+#
+# Before first use, replace the TODO value below (see README "Editor setup").
+
+backend:
+  name: github
+  repo: nur-zaman/nurani
+  branch: main
+  base_url: https://sveltia-cms-auth.TODO.workers.dev # TODO: your Cloudflare Worker URL
+  commit_messages:
+    create: 'Add {{collection}} “{{slug}}”'
+    update: 'Update {{collection}} “{{slug}}”'
+    delete: 'Delete {{collection}} “{{slug}}”'
+    uploadMedia: 'Upload “{{path}}”'
+    deleteMedia: 'Delete “{{path}}”'
+
+site_url: https://nur-zaman.github.io/nurani
+display_url: https://nur-zaman.github.io/nurani
+logo:
+  src: ../favicon.svg
+
+media_folder: public/uploads
+public_folder: /uploads
+
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: '-'
+
+collections:
+  - name: posts
+    label: Blog posts
+    label_singular: Blog post
+    description: Your writing. Leave “Draft” on until a post is ready, then switch it off and publish.
+    folder: content/posts
+    create: true
+    slug: '{{slug}}'
+    summary: '{{title}} · {{date}}{{draft | ternary(" · draft", "")}}'
+    sortable_fields: [date, title]
+    preview_path: /blog/{{slug}}/
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Short description, name: description, widget: text, hint: One or two sentences shown in the post list and RSS. }
+      - { label: Date, name: date, widget: datetime, type: date, format: YYYY-MM-DD, date_format: YYYY-MM-DD, time_format: false }
+      - { label: Draft, name: draft, widget: boolean, default: true, hint: Drafts never appear on the live site. }
+      - { label: Tags, name: tags, widget: list, required: false, default: [], hint: "For example: notes, life, books" }
+      - { label: Cover picture, name: cover, widget: image, required: false }
+      - { label: Cover description, name: coverAlt, widget: string, required: false, hint: Describe the picture for people using screen readers. }
+      - { label: Post, name: body, widget: markdown }
+
+  - name: things
+    label: Things I made
+    label_singular: Thing
+    folder: content/things
+    create: true
+    slug: '{{slug}}'
+    summary: '{{title}}'
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Short description, name: description, widget: text }
+      - { label: Date, name: date, widget: datetime, type: date, format: YYYY-MM-DD, date_format: YYYY-MM-DD, time_format: false, hint: Newest things show first. }
+      - { label: Link, name: url, widget: string, required: false, hint: Optional. Where people can see it. }
+      - { label: Picture, name: image, widget: image, required: false }
+      - { label: Picture description, name: imageAlt, widget: string, required: false }
+      - { label: Draft, name: draft, widget: boolean, default: false }
+      - { label: Notes, name: body, widget: markdown, required: false, hint: Not shown on the site yet. }
+
+  - name: pages
+    label: Pages
+    files:
+      - name: home
+        label: Home page
+        file: content/pages/home.md
+        fields:
+          - { label: Greeting, name: greeting, widget: string, hint: The big heading beside the cat. }
+          - { label: Intro, name: body, widget: markdown }
+      - name: about
+        label: About page
+        file: content/pages/about.md
+        fields:
+          - { label: Title, name: title, widget: string }
+          - { label: About text, name: body, widget: markdown }
+
+  - name: settings
+    label: Settings
+    files:
+      - name: site
+        label: Profile & links
+        file: content/settings/site.json
+        fields:
+          - { label: Name, name: name, widget: string }
+          - { label: Site title, name: title, widget: string, hint: Shown in browser tabs and search results. }
+          - { label: Site description, name: description, widget: text }
+          - { label: Taglines, name: taglines, widget: list, max: 3, hint: The small words under your name (up to 3). }
+          - { label: Profile picture, name: avatar, widget: image, required: false, hint: Square works best. Leave empty for the little landscape. }
+          - { label: Profile picture description, name: avatarAlt, widget: string, required: false }
+          - label: Links
+            name: links
+            widget: list
+            hint: Shown at the bottom of every page. Use mailto:you@example.com for email.
+            fields:
+              - { label: Label, name: label, widget: string }
+              - { label: URL, name: url, widget: string }

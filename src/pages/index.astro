@@ -1,0 +1,31 @@
+---
+import { withBase } from '../lib/paths';
+import { getEntry, render } from 'astro:content';
+import Heading from '../components/Heading.astro';
+import PostItem from '../components/PostItem.astro';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { getPosts } from '../lib/posts';
+
+const home = await getEntry('pages', 'home');
+const Content = home?.body?.trim() ? (await render(home)).Content : undefined;
+const greeting = home?.data.greeting || 'Hello!';
+const latest = (await getPosts()).slice(0, 3);
+---
+
+<SiteLayout section="home" profile="full">
+  <Heading level="h2">{greeting}</Heading>
+  {Content && (
+    <div class="prose intro">
+      <Content />
+    </div>
+  )}
+  {latest.length > 0 && (
+    <section class="latest" aria-labelledby="latest-heading">
+      <h2 id="latest-heading" class="section-label">Lately I wrote</h2>
+      <div class="post-list">
+        {latest.map(post => <PostItem post={post} heading="h3" />)}
+      </div>
+      <a class="more" href={withBase('/blog/')}>All posts →</a>
+    </section>
+  )}
+</SiteLayout>

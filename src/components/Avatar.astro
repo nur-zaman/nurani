@@ -1,0 +1,25 @@
+---
+import { withBase } from '../lib/paths';
+import { site } from '../config';
+interface Props { size: number; eager?: boolean }
+const { size, eager = false } = Astro.props;
+---
+
+<span class="avatar" style={`--avatar-size: ${size}px`}>
+  {site.avatar ? (
+    <img src={withBase(site.avatar)} alt={site.avatarAlt} width={size} height={size} loading={eager ? 'eager' : 'lazy'} decoding="async" />
+  ) : (
+    <svg viewBox="0 0 200 200" role="img" aria-label={site.avatarAlt}>
+      <defs>
+        <linearGradient id="avatar-sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#bfe6fb" />
+          <stop offset="1" stop-color="#f3fbff" />
+        </linearGradient>
+      </defs>
+      <rect width="200" height="200" fill="url(#avatar-sky)" />
+      <path fill="#fff" d="M70 64a20 20 0 0 1 38-9 17 17 0 0 1 27 13 12 12 0 0 1-2 24H76a15 15 0 0 1-6-28Z" />
+      <path fill="#c5de7f" d="M0 126c40-14 86-12 122-4 30 6 56 4 78-4v82H0Z" />
+      <path fill="#87a514" d="M0 160c38-18 92-22 140-14 24 4 44 2 60-6v60H0Z" />
+    </svg>
+  )}
+</span>

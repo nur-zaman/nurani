@@ -1,0 +1,40 @@
+---
+import { withBase } from '../lib/paths';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Heading from './Heading.astro';
+import PostItem from './PostItem.astro';
+import { getPosts, getTags, pageUrl, tagUrl, type Post } from '../lib/posts';
+
+interface Props { posts: Post[]; page: number; totalPages: number }
+const { posts, page, totalPages } = Astro.props;
+const tags = getTags(await getPosts());
+---
+
+<SiteLayout title={page === 1 ? 'Blog' : `Blog · Page ${page}`} section="blog">
+  <Heading>Blog</Heading>
+  {tags.length > 0 && page === 1 && (
+    <nav class="tag-cloud" aria-label="Browse by tag">
+      <span class="label">Tags</span>
+      <ul class="tags">
+        {tags.map(tag => <li><a href={tagUrl(tag)}>{tag.label}</a></li>)}
+      </ul>
+    </nav>
+  )}
+  {posts.length > 0 ? (
+    <div class="post-list">
+      {posts.map(post => <PostItem post={post} />)}
+    </div>
+  ) : (
+    <div class="empty">
+      <img src={withBase('/art/cat-sleep.png')} alt="" width="140" height="140" loading="lazy" />
+      <p>Nothing here yet. The cat is guarding the first post.</p>
+    </div>
+  )}
+  {totalPages > 1 && (
+    <nav class="pagination" aria-label="Blog pages">
+      {page > 1 ? <a href={pageUrl(page - 1)} rel="prev">← Newer</a> : <span></span>}
+      <span class="page-count">Page {page} of {totalPages}</span>
+      {page < totalPages ? <a href={pageUrl(page + 1)} rel="next">Older →</a> : <span></span>}
+    </nav>
+  )}
+</SiteLayout>
