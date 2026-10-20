@@ -2,11 +2,11 @@
 
 Nurani Zaman's blog and little portfolio. It's a static Astro site, deployed to GitHub Pages and edited in [Sveltia CMS](https://github.com/sveltia/sveltia-cms) at `/admin/`.
 
-**For now it's live at https://nur-zaman.github.io/nurani/** from the public repo `nur-zaman/nurani`. The domain nurani.work comes later; see [Custom domain](#custom-domain-later).
+**For now it's live at https://nurzaman.dev/nurani/** from the public repo `nur-zaman/nurani`. The domain nurani.work comes later; see [Custom domain](#custom-domain-later).
 
 ## For Nurani: writing a post
 
-1. Go to **https://nur-zaman.github.io/nurani/admin/** (later **https://nurani.work/admin/**) and choose **Sign In with GitHub**.
+1. Go to **https://nurzaman.dev/nurani/admin/** (later **https://nurani.work/admin/**) and choose **Sign In with GitHub**.
 2. Open **Blog posts → New Blog post**, write, and click **Save**.
 3. Posts start as **Draft**. A draft is saved but stays off the live site. When the post is ready, switch **Draft** off and save again.
 4. About two minutes after you save, the site rebuilds by itself.
@@ -62,9 +62,9 @@ GitHub Pages can't run the OAuth handshake, so a free Cloudflare Worker does it.
 
 1. Deploy [sveltia-cms-auth](https://github.com/sveltia/sveltia-cms-auth) to Cloudflare Workers using the **Deploy to Cloudflare** button in its README. Note the worker URL, for example `https://sveltia-cms-auth.<account>.workers.dev`.
 2. In the `nur-zaman` GitHub account, go to **Settings → Developer settings → OAuth Apps → New OAuth App**:
-   - Homepage URL: `https://nur-zaman.github.io/nurani/`
+   - Homepage URL: `https://nurzaman.dev/nurani/`
    - Authorization callback URL: `<worker URL>/callback`
-3. In the worker's **Settings → Variables**, add `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` (encrypted) and `ALLOWED_DOMAINS` = `nur-zaman.github.io, nurani.work`.
+3. In the worker's **Settings → Variables**, add `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` (encrypted) and `ALLOWED_DOMAINS` = `nurzaman.dev, nurani.work`.
 4. In `public/admin/config.yml`, replace the `TODO` in `base_url` with the worker URL.
 
 Until then, Nurani can use **Sign In Using Access Token** with a fine-grained GitHub token that has *Contents: read and write* on `nur-zaman/nurani`.
