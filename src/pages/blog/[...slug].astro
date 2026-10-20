@@ -3,6 +3,7 @@ import { withBase } from '../../lib/paths';
 import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
 import { render } from 'astro:content';
 import SiteLayout from '../../layouts/SiteLayout.astro';
+import { text } from '../../config';
 import { formatDate, getPostTags, getPosts, isoDate, readingTime, tagUrl } from '../../lib/posts';
 
 export const getStaticPaths = (async () => {
@@ -18,13 +19,13 @@ const tags = getPostTags(post);
 <SiteLayout title={post.data.title} description={post.data.description} section="blog" articleDate={post.data.date} noindex={post.data.draft}>
   <article class="article">
     <header class="article-header">
-      <a class="back" href={withBase('/blog/')}>← All posts</a>
+      <a class="back" href={withBase('/blog/')}>{text.backToBlog}</a>
       {post.data.draft && <p class="draft-label">Draft · local preview only</p>}
       <h1>{post.data.title}</h1>
       <p class="meta">
         <time datetime={isoDate(post.data.date)}>{formatDate(post.data.date)}</time>
         <span aria-hidden="true">·</span>
-        <span>{readingTime(post)} min read</span>
+        <span>{readingTime(post)} {text.minRead}</span>
       </p>
       {tags.length > 0 && (
         <ul class="tags" aria-label="Tags">
@@ -42,7 +43,7 @@ const tags = getPostTags(post);
       <Content />
     </div>
     <footer class="article-end">
-      <a href={withBase('/blog/')}>← Back to all posts</a>
+      <a href={withBase('/blog/')}>{text.endOfPost}</a>
     </footer>
   </article>
 </SiteLayout>

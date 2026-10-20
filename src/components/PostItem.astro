@@ -1,5 +1,6 @@
 ---
 import { withBase } from '../lib/paths';
+import { text } from '../config';
 import { formatDate, getPostTags, isoDate, postUrl, readingTime, tagUrl, type Post } from '../lib/posts';
 interface Props { post: Post; heading?: 'h2' | 'h3' }
 const { post, heading: Heading = 'h2' } = Astro.props;
@@ -16,7 +17,7 @@ const tags = getPostTags(post);
     <p class="meta">
       <time datetime={isoDate(post.data.date)}>{formatDate(post.data.date)}</time>
       <span aria-hidden="true">·</span>
-      <span>{readingTime(post)} min read</span>
+      <span>{readingTime(post)} {text.minRead}</span>
       {post.data.draft && <span class="draft-label">Draft</span>}
     </p>
     <Heading class="post-title"><a href={postUrl(post)}>{post.data.title}</a></Heading>

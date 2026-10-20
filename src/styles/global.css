@@ -2,6 +2,36 @@
    A pixel sky band sits over a gingham-and-stars tablecloth; a stitched
    profile card and a wavy-edged sheet of paper hold everything else. */
 
+/* Libron (OFL, github.com/nicoverbruggen/libron): a calm book face for everything meant to be read. */
+@font-face {
+  font-family: 'Libron';
+  src: url('../assets/fonts/libron/Libron-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Libron';
+  src: url('../assets/fonts/libron/Libron-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Libron';
+  src: url('../assets/fonts/libron/Libron-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Libron';
+  src: url('../assets/fonts/libron/Libron-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
   --sky: #5476b4;
   --sky-deep: #3f5f9c;
@@ -19,9 +49,12 @@
   --leaf: #87a514;
   --chip: #f3dfb6;
   --rule: #e2cfab;
+  --panel: #fff6e3;
+  --panel-shade: #f1dfbd;
+  --line: #3a3330;
 
   --font-display: 'Coustard', 'Rockwell', 'Roboto Slab', Georgia, serif;
-  --font-body: 'Literata', Georgia, 'Times New Roman', serif;
+  --font-body: 'Libron', Georgia, 'Times New Roman', serif;
   --font-pixel: 'Pixelify Sans', ui-monospace, 'Courier New', monospace;
 
   --column: 760px;
@@ -109,16 +142,35 @@ a:hover { color: var(--accent-hover); }
 
 /* ---------- Profile card ---------- */
 
+/* A cream pixel "dialog box": notched corners from four flat shadows,
+   a soft bevel inside, and a hard drop shadow like an old game window. */
 .profile-card {
   position: relative;
-  padding: 120px 32px 28px;
+  padding: 124px 32px 30px;
   margin-top: 104px;
   text-align: center;
-  background: var(--card);
-  border-radius: 22px;
-  outline: 2px dashed var(--card-stitch);
-  outline-offset: -9px;
-  box-shadow: 0 2px 0 rgba(60, 50, 40, 0.12);
+  background:
+    radial-gradient(circle, rgba(169, 119, 79, 0.16) 1px, transparent 1.5px) 0 0 / 12px 12px,
+    var(--panel);
+  box-shadow:
+    inset 0 5px 0 #fffdf7,
+    inset 0 -6px 0 var(--panel-shade),
+    0 -4px 0 0 var(--line),
+    0 4px 0 0 var(--line),
+    -4px 0 0 0 var(--line),
+    4px 0 0 0 var(--line);
+  filter: drop-shadow(8px 8px 0 rgba(58, 38, 34, 0.22));
+}
+
+/* A little cat napping on the top edge of the window. */
+.card-cat {
+  position: absolute;
+  right: 22px;
+  top: 0;
+  width: 92px;
+  height: auto;
+  translate: 0 -78%;
+  pointer-events: none;
 }
 
 .avatar-link {
@@ -137,31 +189,35 @@ a:hover { color: var(--accent-hover); }
   overflow: hidden;
   background: #fff;
   border: 6px solid #fff;
-  box-shadow: 0 0 0 5px var(--leaf);
+  box-shadow: 0 0 0 4px var(--line), 6px 6px 0 4px rgba(58, 38, 34, 0.22);
 }
 .avatar img,
 .avatar svg { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
 
 .name {
   margin: 0;
-  font: 400 clamp(2.4rem, 7vw, 3.5rem)/1.1 var(--font-display);
-  letter-spacing: -0.01em;
+  font: 600 clamp(2.4rem, 7vw, 3.6rem)/1.05 var(--font-pixel);
+  letter-spacing: 0.02em;
 }
-.name a { color: #171311; text-decoration: none; }
-.name a:hover { color: #171311; }
+.name a {
+  color: var(--line);
+  text-decoration: none;
+  text-shadow: 3px 3px 0 #f6d777;
+}
+.name a:hover { color: var(--line); }
 
 .taglines {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 4px 12px;
-  margin: 14px 0 0;
+  margin: 16px 0 0;
   font: 400 1.0625rem/1.4 var(--font-pixel);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #2d2724;
+  color: var(--ink-soft);
 }
-.taglines .divider { color: var(--ink-muted); }
+.taglines .divider { color: #e0a92c; }
 
 .tabs {
   display: flex;
@@ -197,8 +253,10 @@ a:hover { color: var(--accent-hover); }
   text-align: left;
 }
 .profile-compact .avatar-link { position: static; translate: none; flex: none; }
-.profile-compact .avatar { border-width: 4px; box-shadow: 0 0 0 4px var(--leaf); }
+.profile-compact .avatar { border-width: 4px; box-shadow: 0 0 0 3px var(--line), 4px 4px 0 3px rgba(58, 38, 34, 0.22); }
 .profile-compact .name { font-size: clamp(1.8rem, 5vw, 2.4rem); }
+.profile-compact .name a { text-shadow: 2px 2px 0 #f6d777; }
+.profile-compact .card-cat { width: 72px; right: 18px; }
 .profile-compact .tabs { justify-content: flex-start; margin-top: 12px; }
 
 /* ---------- Wavy paper ---------- */
@@ -487,7 +545,8 @@ a:hover { color: var(--accent-hover); }
 @media (max-width: 640px) {
   :root { --gutter: 16px; --sky-height: 300px; }
   .page { padding-top: 96px; }
-  .profile-card { margin-top: 80px; padding: 96px 20px 24px; }
+  .profile-card { margin-top: 80px; padding: 100px 20px 26px; }
+  .card-cat { width: 52px; right: 8px; }
   .profile-full .avatar { --avatar-size: 168px !important; }
   .taglines { font-size: 0.9rem; letter-spacing: 0.1em; }
   .tabs { gap: 8px; }
@@ -509,6 +568,7 @@ a:hover { color: var(--accent-hover); }
 @media (max-width: 360px) {
   .tabs a { padding: 3px 8px 4px; font-size: 0.82rem; box-shadow: 2px 2px 0 #3a3330; }
   .name { font-size: 2.1rem; }
+  .card-cat { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -3,13 +3,14 @@ import { withBase } from '../../lib/paths';
 import Heading from '../../components/Heading.astro';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import { getThings } from '../../lib/posts';
+import { text } from '../../config';
 
 const things = await getThings();
 const isExternal = (url?: string) => Boolean(url && /^https?:/.test(url));
 ---
 
-<SiteLayout title="Things I made" section="things">
-  <Heading>Things I made</Heading>
+<SiteLayout title={text.thingsTitle} section="things">
+  <Heading>{text.thingsTitle}</Heading>
   {things.length > 0 ? (
     <ul class="things">
       {things.map(thing => (
@@ -36,7 +37,7 @@ const isExternal = (url?: string) => Boolean(url && /^https?:/.test(url));
   ) : (
     <div class="empty">
       <img src={withBase('/art/cat-sleep.png')} alt="" width="140" height="140" loading="lazy" />
-      <p>Nothing here yet. Things are being made.</p>
+      <p>{text.thingsEmpty}</p>
     </div>
   )}
 </SiteLayout>

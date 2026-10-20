@@ -89,12 +89,12 @@ collections:
         label: Profile & links
         file: content/settings/site.json
         fields:
+          - { label: Profile picture, name: avatar, widget: image, required: false, hint: The round picture at the top of every page. Square works best. Leave empty for the little landscape. }
+          - { label: Profile picture description, name: avatarAlt, widget: string, required: false, hint: Describe the picture for people using screen readers. }
           - { label: Name, name: name, widget: string }
           - { label: Site title, name: title, widget: string, hint: Shown in browser tabs and search results. }
           - { label: Site description, name: description, widget: text }
           - { label: Taglines, name: taglines, widget: list, max: 3, hint: The small words under your name (up to 3). }
-          - { label: Profile picture, name: avatar, widget: image, required: false, hint: Square works best. Leave empty for the little landscape. }
-          - { label: Profile picture description, name: avatarAlt, widget: string, required: false }
           - label: Links
             name: links
             widget: list
@@ -102,3 +102,32 @@ collections:
             fields:
               - { label: Label, name: label, widget: string }
               - { label: URL, name: url, widget: string }
+      - name: text
+        label: Words around the site
+        file: content/settings/text.json
+        description: Menu buttons, little headings and messages. Leave a box empty to use the default.
+        fields:
+          - { label: Menu button – Home, name: navHome, widget: string, required: false }
+          - { label: Menu button – Blog, name: navBlog, widget: string, required: false }
+          - { label: Menu button – Things, name: navThings, widget: string, required: false }
+          - { label: Menu button – About, name: navAbout, widget: string, required: false }
+          - { label: Home – heading above latest posts, name: latestHeading, widget: string, required: false }
+          - { label: Home – link to all posts, name: allPostsLink, widget: string, required: false }
+          - { label: Blog page title, name: blogTitle, widget: string, required: false }
+          - { label: Blog – tags label, name: tagsLabel, widget: string, required: false }
+          - { label: Tag page title, name: taggedTitle, widget: string, required: false, hint: 'Shown before the tag name, e.g. Tagged “books”.' }
+          - { label: Blog – no posts yet, name: blogEmpty, widget: text, required: false }
+          - { label: Blog – newer posts link, name: newerLink, widget: string, required: false }
+          - { label: Blog – older posts link, name: olderLink, widget: string, required: false }
+          - { label: Blog – word “Page”, name: pageLabel, widget: string, required: false }
+          - { label: Blog – word “of”, name: pageOfLabel, widget: string, required: false, hint: 'As in “Page 1 of 3”.' }
+          - { label: Reading time words, name: minRead, widget: string, required: false, hint: 'Shown after the number, e.g. 3 min read.' }
+          - { label: Post – back link at top, name: backToBlog, widget: string, required: false }
+          - { label: Post – back link at bottom, name: endOfPost, widget: string, required: false }
+          - { label: Things page title, name: thingsTitle, widget: string, required: false }
+          - { label: Things – nothing yet, name: thingsEmpty, widget: text, required: false }
+          - { label: Missing page – title, name: notFoundTitle, widget: string, required: false }
+          - { label: Missing page – message, name: notFoundText, widget: text, required: false }
+          - { label: Missing page – home link, name: notFoundLink, widget: string, required: false }
+          - { label: Footer – RSS link, name: rssLink, widget: string, required: false }
+          - { label: Skip link (screen readers), name: skipLink, widget: string, required: false }

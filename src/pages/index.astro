@@ -5,6 +5,7 @@ import Heading from '../components/Heading.astro';
 import PostItem from '../components/PostItem.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import { getPosts } from '../lib/posts';
+import { text } from '../config';
 
 const home = await getEntry('pages', 'home');
 const Content = home?.body?.trim() ? (await render(home)).Content : undefined;
@@ -21,11 +22,11 @@ const latest = (await getPosts()).slice(0, 3);
   )}
   {latest.length > 0 && (
     <section class="latest" aria-labelledby="latest-heading">
-      <h2 id="latest-heading" class="section-label">Lately I wrote</h2>
+      <h2 id="latest-heading" class="section-label">{text.latestHeading}</h2>
       <div class="post-list">
         {latest.map(post => <PostItem post={post} heading="h3" />)}
       </div>
-      <a class="more" href={withBase('/blog/')}>All posts →</a>
+      <a class="more" href={withBase('/blog/')}>{text.allPostsLink}</a>
     </section>
   )}
 </SiteLayout>

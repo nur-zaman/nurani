@@ -1,14 +1,11 @@
 ---
 import { withBase } from '../lib/paths';
 import '@fontsource/coustard/400.css';
-import '@fontsource/literata/400.css';
-import '@fontsource/literata/400-italic.css';
-import '@fontsource/literata/600.css';
 import '@fontsource/pixelify-sans/400.css';
 import '@fontsource/pixelify-sans/600.css';
 import '../styles/global.css';
 import Avatar from '../components/Avatar.astro';
-import { site } from '../config';
+import { site, text } from '../config';
 
 interface Props {
   title?: string;
@@ -32,10 +29,10 @@ const pageTitle = title ? `${title} · ${site.name}` : site.title;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const socialImage = new URL(withBase('/social.png'), Astro.site);
 const tabs = [
-  { label: 'Home', href: withBase('/'), key: 'home' },
-  { label: 'Blog', href: withBase('/blog/'), key: 'blog' },
-  { label: 'Things', href: withBase('/things/'), key: 'things' },
-  { label: 'About', href: withBase('/about/'), key: 'about' },
+  { label: text.navHome, href: withBase('/'), key: 'home' },
+  { label: text.navBlog, href: withBase('/blog/'), key: 'blog' },
+  { label: text.navThings, href: withBase('/things/'), key: 'things' },
+  { label: text.navAbout, href: withBase('/about/'), key: 'about' },
 ];
 const NameTag = profile === 'full' ? 'h1' : 'p';
 const year = new Date().getUTCFullYear();
@@ -65,10 +62,11 @@ const year = new Date().getUTCFullYear();
     <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body class:list={[`profile-${profile}`]}>
-    <a class="skip" href="#content">Skip to content</a>
+    <a class="skip" href="#content">{text.skipLink}</a>
     <div class="sky" aria-hidden="true"></div>
     <div class="page">
       <header class="profile-card">
+        <img class="card-cat" src={withBase('/art/cat-sleep.png')} alt="" width="92" height="92" decoding="async" />
         <a class="avatar-link" href={withBase('/')} aria-label={`${site.name}, home`}>
           <Avatar size={profile === 'full' ? 208 : 88} eager />
         </a>
@@ -77,7 +75,7 @@ const year = new Date().getUTCFullYear();
           {profile === 'full' && site.taglines.length > 0 && (
             <p class="taglines">
               {site.taglines.map((line, index) => (
-                <>{index > 0 && <span class="divider" aria-hidden="true">|</span>}<span>{line}</span></>
+                <>{index > 0 && <span class="divider" aria-hidden="true">✦</span>}<span>{line}</span></>
               ))}
             </p>
           )}
@@ -102,7 +100,7 @@ const year = new Date().getUTCFullYear();
               <a href={withBase(link.url)} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}>{link.label}</a>
             );
           })}
-          <a href={withBase('/rss.xml')}>RSS</a>
+          <a href={withBase('/rss.xml')}>{text.rssLink}</a>
         </nav>
         <p>© {year} {site.name}</p>
       </footer>
