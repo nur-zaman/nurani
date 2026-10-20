@@ -2,11 +2,11 @@
 
 Nurani Zaman's blog and little portfolio. It's a static Astro site, deployed to GitHub Pages and edited in [Sveltia CMS](https://github.com/sveltia/sveltia-cms) at `/admin/`.
 
-**For now it's live at https://nurzaman.dev/nurani/** from the public repo `nur-zaman/nurani`. The domain nurani.work comes later; see [Custom domain](#custom-domain-later).
+Live at **https://nurani.work**, from the public repo `nur-zaman/nurani`. DNS is at Porkbun.
 
 ## For Nurani: writing a post
 
-1. Go to **https://nurzaman.dev/nurani/admin/** (later **https://nurani.work/admin/**) and choose **Sign In with GitHub**.
+1. Go to **https://nurani.work/admin/** and choose **Sign In with GitHub**.
 2. Open **Blog posts → New Blog post**, write, and click **Save**.
 3. Posts start as **Draft**. A draft is saved but stays off the live site. When the post is ready, switch **Draft** off and save again.
 4. About two minutes after you save, the site rebuilds by itself.
@@ -62,22 +62,18 @@ GitHub Pages can't run the OAuth handshake, so a free Cloudflare Worker does it.
 
 1. Deploy [sveltia-cms-auth](https://github.com/sveltia/sveltia-cms-auth) to Cloudflare Workers using the **Deploy to Cloudflare** button in its README. Note the worker URL, for example `https://sveltia-cms-auth.<account>.workers.dev`.
 2. In the `nur-zaman` GitHub account, go to **Settings → Developer settings → OAuth Apps → New OAuth App**:
-   - Homepage URL: `https://nurzaman.dev/nurani/`
+   - Homepage URL: `https://nurani.work`
    - Authorization callback URL: `<worker URL>/callback`
-3. In the worker's **Settings → Variables**, add `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` (encrypted) and `ALLOWED_DOMAINS` = `nurzaman.dev, nurani.work`.
+3. In the worker's **Settings → Variables**, add `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` (encrypted) and `ALLOWED_DOMAINS` = `nurani.work`.
 4. In `public/admin/config.yml`, replace the `TODO` in `base_url` with the worker URL.
 
 Until then, Nurani can use **Sign In Using Access Token** with a fine-grained GitHub token that has *Contents: read and write* on `nur-zaman/nurani`.
 
-## Custom domain (later)
+## Domain
 
-1. Change `deploy.config.mjs` to `site = 'https://nurani.work'` and `base = '/'`.
-2. In `public/admin/config.yml`, set `site_url` and `display_url` to `https://nurani.work`, and set `logo.src` to `/favicon.svg`.
-3. Add `public/CNAME` containing `nurani.work`.
-4. At the DNS provider, add the four GitHub Pages `A` records for the apex (`185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`), plus a `www` `CNAME` to `nur-zaman.github.io`.
-5. Go to **Settings → Pages → Custom domain**, enter `nurani.work` and enable **Enforce HTTPS**. Update the OAuth app's Homepage URL.
+`public/CNAME` and `deploy.config.mjs` set the site to `https://nurani.work`. The Porkbun DNS has the four GitHub Pages `A` records (`185.199.108–111.153`), the matching `AAAA` records (`2606:50c0:8000–8003::153`) and `www` → `nur-zaman.github.io`.
 
-Content never needs changing: images and links are stored as `/uploads/...` and `/about/`, and the base path is added at build time.
+Content stores images and links as `/uploads/...` and `/about/`. If the site ever moves under a sub-path, change `base` in `deploy.config.mjs` and the build adds the prefix.
 
 ### Making the repo private
 

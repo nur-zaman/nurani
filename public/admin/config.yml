@@ -1,4 +1,4 @@
-# Sveltia CMS — the editor at https://nurzaman.dev/nurani/admin/ (later https://nurani.work/admin/)
+# Sveltia CMS — the editor at https://nurani.work/admin/
 # Docs: https://github.com/sveltia/sveltia-cms
 #
 # Before first use, replace the TODO value below (see README "Editor setup").
@@ -15,8 +15,8 @@ backend:
     uploadMedia: 'Upload “{{path}}”'
     deleteMedia: 'Delete “{{path}}”'
 
-site_url: https://nurzaman.dev/nurani
-display_url: https://nurzaman.dev/nurani
+site_url: https://nurani.work
+display_url: https://nurani.work
 logo:
   src: ../favicon.svg
 
