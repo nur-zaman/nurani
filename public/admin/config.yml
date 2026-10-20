@@ -1,13 +1,13 @@
 # Sveltia CMS — the editor at https://nurani.work/admin/
 # Docs: https://github.com/sveltia/sveltia-cms
 #
-# Before first use, replace the TODO value below (see README "Editor setup").
+# Sign-in runs through the sveltia-cms-auth Cloudflare Worker (see README).
 
 backend:
   name: github
   repo: nur-zaman/nurani
   branch: main
-  base_url: https://sveltia-cms-auth.TODO.workers.dev # TODO: your Cloudflare Worker URL
+  base_url: https://sveltia-cms-auth.mail-nuruzzaman.workers.dev
   commit_messages:
     create: 'Add {{collection}} “{{slug}}”'
     update: 'Update {{collection}} “{{slug}}”'

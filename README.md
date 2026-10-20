@@ -65,7 +65,7 @@ GitHub Pages can't run the OAuth handshake, so a free Cloudflare Worker does it.
    - Homepage URL: `https://nurani.work`
    - Authorization callback URL: `<worker URL>/callback`
 3. In the worker's **Settings → Variables**, add `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` (encrypted) and `ALLOWED_DOMAINS` = `nurani.work`.
-4. In `public/admin/config.yml`, replace the `TODO` in `base_url` with the worker URL.
+4. `public/admin/config.yml` already points `base_url` at `https://sveltia-cms-auth.mail-nuruzzaman.workers.dev`.
 
 Until then, Nurani can use **Sign In Using Access Token** with a fine-grained GitHub token that has *Contents: read and write* on `nur-zaman/nurani`.
 
